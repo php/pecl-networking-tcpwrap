@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!-- do not use the "Type" attribute here, that one is only for
+     generated package.xml files -->
+<package>
+  <name>tcpwrap</name>
+  <summary>Provides binding to tcpwrappers</summary>
+  <status>beta</status>
+  <maintainers>
+    <maintainer>
+      <user>mg</user>
+      <name>Marcin Gibula</name>
+      <email>mg@php.net</email>
+    </maintainer>
+  </maintainers>
+  <release>
+    <version>0.1</version>
+    <date>2001-11-30</date>
+    <notes>
+        - First offical PEAR/PECL release
+    </notes>
+  </release>
+  <filelist>
+    <dir role="source" name="/" baseinstalldir="tcpwrap">
+        <file>CREDITS</file>
+        <file>EXPERIMENTAL</file>
+        <file>TODO</file>
+        <file>Makefile.in</file>
+        <file>config.m4</file>
+        <file>tcpwrap.c</file>
+        <file>tcpwrap.php</file>
+        <file>php_tcpwrap.h</file>
+    </dir>
+  </filelist>
+</package>
+
