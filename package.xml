@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "../package.dtd">
-<package version="1.0">
+<package>
  <name>tcpwrap</name>
  <summary>tcpwrappers binding.</summary>
  <description>
@@ -17,20 +17,23 @@
  </maintainers>
 
  <release>
-  <version>1.0</version>
-  <date>2003-10-24</date>
+  <version>1.1</version>
+  <date>2004-01-07</date>
   <state>stable</state>
   <notes>
-   This is the first release of tcpwrap extension.
+    This release adds extra parameter to tcpwrap_check function to avoid dns lookups.
   </notes>
   <filelist>
-    <dir role="src" name="/">
-        <file role="doc">CREDITS</file>
-		<file role="doc">EXPERIMENTAL</file>
-        <file role="src">config.m4</file>
-        <file role="src">php_tcpwrap.h</file>
-        <file role="src">tcpwrap.c</file>
-     </dir>
+   <dir role="src" name="/">
+    <file role="doc">CREDITS</file>
+    <file role="doc">EXPERIMENTAL</file>
+    <file role="src">config.m4</file>
+    <file role="src">php_tcpwrap.h</file>
+    <file role="src">tcpwrap.c</file>
+
+     <file role="test" name="tests/001.phpt"/>
+     <file role="test" name="tests/002.phpt"/>
+   </dir>
   </filelist>
  </release>
 </package>

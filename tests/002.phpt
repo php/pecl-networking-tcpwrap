@@ -1,5 +1,5 @@
 --TEST--
-Check for tcpwrap presence
+tcpwrap_check()
 --SKIPIF--
 <?php if (!extension_loaded("tcpwrap")) print "skip"; ?>
 --POST--
@@ -7,7 +7,8 @@ Check for tcpwrap presence
 --INI--
 --FILE--
 <?php 
-echo "tcpwrap extension is available";
+$r = tcpwrap_check('foo', '127.0.0.1');
+echo gettype($r);
 ?>
 --EXPECT--
-tcpwrap extension is available
+boolean

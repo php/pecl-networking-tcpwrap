@@ -59,7 +59,7 @@ zend_module_entry tcpwrap_module_entry = {
 	NULL,
 	PHP_MINFO(tcpwrap),
 #if ZEND_MODULE_API_NO >= 20010901
-	"0.1", /* Replace with version number for your extension */
+	"1.1", /* Replace with version number for your extension */
 #endif
 	STANDARD_MODULE_PROPERTIES
 };
