@@ -17,11 +17,11 @@
  </maintainers>
 
  <release>
-  <version>0.1</version>
-  <date>2003-10-19</date>
+  <version>1.0</version>
+  <date>2003-10-24</date>
   <state>stable</state>
   <notes>
-   This is the first release of LZF extension.
+   This is the first release of tcpwrap extension.
   </notes>
   <filelist>
     <dir role="src" name="/">

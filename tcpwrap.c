@@ -79,11 +79,11 @@ PHP_MINFO_FUNCTION(tcpwrap)
 }
 /* }}} */
 
-/* {{{ proto bool tcpwrap_check(string daemon, string address [, string user])
+/* {{{ proto bool tcpwrap_check(string daemon, string address [, string user, [int nodns]])
    Check if client has access according to tcp wrappers table */
 PHP_FUNCTION(tcpwrap_check)
 {
-	int argc, retval;
+	int argc, retval, nodns = 0;
 	char *daemon, *ip, *address, *user = NULL;
 	int daemon_l, address_l, user_l;
 	struct in_addr tmp;
@@ -101,6 +101,11 @@ PHP_FUNCTION(tcpwrap_check)
 				return;
 			}
 			break;
+		case 4:
+			if (zend_parse_parameters(argc TSRMLS_CC, "sssb", &daemon, &daemon_l, &address, &address_l, &user, &user_l, &nodns) == FAILURE) {
+            	return;
+			}
+			break;
 		default:
 			WRONG_PARAM_COUNT;
 	}
@@ -113,13 +118,12 @@ PHP_FUNCTION(tcpwrap_check)
 		ip = address;
 		address = STRING_UNKNOWN;
 	} else {
-		if (!(host_entry = gethostbyname(address))) {
-			php_error(E_WARNING, "%s Host lookup failed", get_active_function_name(TSRMLS_C));
-			RETURN_FALSE;
+		if (nodns || !(host_entry = gethostbyname(address))) {
+			ip = STRING_UNKNOWN;
+		} else {
+			memcpy(&tmp.s_addr, *(host_entry->h_addr_list), sizeof(tmp.s_addr));
+			ip = inet_ntoa(tmp);
 		}
-
-		memcpy(&tmp.s_addr, *(host_entry->h_addr_list), sizeof(tmp.s_addr));
-		ip = inet_ntoa(tmp);
 	}
 
 	retval = hosts_ctl(daemon, address, ip, user);
