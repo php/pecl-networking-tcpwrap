@@ -90,24 +90,8 @@ PHP_FUNCTION(tcpwrap_check)
 	struct hostent *host_entry;
 
 	argc = ZEND_NUM_ARGS();
-	switch (argc) {
-		case 2:
-			if (zend_parse_parameters(argc TSRMLS_CC, "ss", &daemon, &daemon_l, &address, &address_l) == FAILURE) {
-				return;
-			}
-			break;
-		case 3:
-			if (zend_parse_parameters(argc TSRMLS_CC, "sss", &daemon, &daemon_l, &address, &address_l, &user, &user_l) == FAILURE) {
-				return;
-			}
-			break;
-		case 4:
-			if (zend_parse_parameters(argc TSRMLS_CC, "sssb", &daemon, &daemon_l, &address, &address_l, &user, &user_l, &nodns) == FAILURE) {
-            	return;
-			}
-			break;
-		default:
-			WRONG_PARAM_COUNT;
+	if (zend_parse_parameters(argc TSRMLS_CC, "ss|sb", &daemon, &daemon_l, &address, &address_l, &user, &user_l, &nodns) == FAILURE) {
+		return;
 	}
 
 	if (!user) {
