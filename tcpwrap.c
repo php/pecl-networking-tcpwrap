@@ -95,7 +95,7 @@ PHP_FUNCTION(tcpwrap_check)
 	}
 
 	if (!user) {
-    	user = STRING_UNKNOWN;
+		user = STRING_UNKNOWN;
 	}
 
 	if (inet_aton(address, &tmp)) {
