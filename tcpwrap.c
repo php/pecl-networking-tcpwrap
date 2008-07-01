@@ -15,7 +15,7 @@
   | Author:                                                              |
   +----------------------------------------------------------------------+
 
-  $Id$ 
+  $Id$
 */
 
 #ifdef HAVE_CONFIG_H
@@ -85,15 +85,17 @@ PHP_MINFO_FUNCTION(tcpwrap)
 PHP_FUNCTION(tcpwrap_check)
 {
 	int argc, retval, nodns = 0;
-	char *daemon, *ip, *address, *user = NULL;
-	int daemon_l, address_l, user_l;
+	char data[512], *daemon, *ip, *address, *user = NULL;
+	int daemon_l, address_l, user_l, lookup_result, dns_result;
 	struct in_addr tmp;
-	struct hostent *host_entry;
+	struct hostent host_entry, *result;
 
 	argc = ZEND_NUM_ARGS();
 	if (zend_parse_parameters(argc TSRMLS_CC, "ss|sb", &daemon, &daemon_l, &address, &address_l, &user, &user_l, &nodns) == FAILURE) {
 		return;
 	}
+
+	dns_result = gethostbyname_r(address, &host_entry, data, sizeof(data), &result, &lookup_result);
 
 	if (!user) {
 		user = STRING_UNKNOWN;
@@ -103,10 +105,10 @@ PHP_FUNCTION(tcpwrap_check)
 		ip = address;
 		address = STRING_UNKNOWN;
 	} else {
-		if (nodns || !(host_entry = gethostbyname(address))) {
+		if (nodns || !result || dns_result != 0) {
 			ip = STRING_UNKNOWN;
 		} else {
-			memcpy(&tmp.s_addr, *(host_entry->h_addr_list), sizeof(tmp.s_addr));
+			memcpy(&tmp.s_addr, *host_entry.h_addr_list, sizeof(tmp.s_addr));
 			ip = inet_ntoa(tmp);
 		}
 	}
