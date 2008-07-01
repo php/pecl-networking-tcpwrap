@@ -27,8 +27,8 @@ if test "$PHP_TCPWRAP" != "no"; then
 
   PHP_ADD_INCLUDE($TCPWRAP_DIR/include)
 
-  LIBNAME=wrap # you may want to change this
-  LIBSYMBOL=request_init # you most likely want to change this
+  LIBNAME=wrap
+  LIBSYMBOL=request_init
 
   PHP_CHECK_LIBRARY($LIBNAME,$LIBSYMBOL,
   [
@@ -39,7 +39,12 @@ if test "$PHP_TCPWRAP" != "no"; then
   ],[
     -L$TCPWRAP_DIR/lib -lm -ldl
   ])
-  
+
+  AC_CHECK_FUNC(gethostbyname_r, [have_gethostbyname_r=yes], [have_gethostbyname_r=no])
+  if test "$have_gethostbyname_r" = "no";
+	AC_MSG_ERROR([this extension requires system to support gethostbyname_r function])
+  fi
+
   PHP_SUBST(TCPWRAP_SHARED_LIBADD)
 
   PHP_NEW_EXTENSION(tcpwrap, tcpwrap.c, $ext_shared)
