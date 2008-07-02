@@ -41,7 +41,7 @@ if test "$PHP_TCPWRAP" != "no"; then
   ])
 
   AC_CHECK_FUNC(gethostbyname_r, [have_gethostbyname_r=yes], [have_gethostbyname_r=no])
-  if test "$have_gethostbyname_r" = "no";
+  if test "$have_gethostbyname_r" = "no"; then
 	AC_MSG_ERROR([this extension requires system to support gethostbyname_r function])
   fi
 
