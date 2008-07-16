@@ -95,7 +95,11 @@ PHP_FUNCTION(tcpwrap_check)
 		return;
 	}
 
+#if defined(__sun)
+	result = gethostbyname_r(address, &host_entry, data, sizeof(data), &dns_result);
+#else
 	dns_result = gethostbyname_r(address, &host_entry, data, sizeof(data), &result, &lookup_result);
+#endif
 
 	if (!user) {
 		user = STRING_UNKNOWN;
