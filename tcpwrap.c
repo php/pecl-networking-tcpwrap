@@ -39,7 +39,7 @@ int deny_severity = 0;
  *
  * Every user visible function must have an entry in tcpwrap_functions[].
  */
-function_entry tcpwrap_functions[] = {
+zend_function_entry tcpwrap_functions[] = {
 	PHP_FE(tcpwrap_check,	NULL)		/* For testing, remove later. */
 	{NULL, NULL, NULL}	/* Must be the last line in tcpwrap_functions[] */
 };
