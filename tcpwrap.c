@@ -1,8 +1,8 @@
 /*
   +----------------------------------------------------------------------+
-  | PHP Version 4                                                        |
+  | PHP Version 5, 7                                                     |
   +----------------------------------------------------------------------+
-  | Copyright (c) 1997-2003 The PHP Group                                |
+  | Copyright (c) 1997-2016 The PHP Group                                |
   +----------------------------------------------------------------------+
   | This source file is subject to version 2.02 of the PHP license,      |
   | that is bundled with this package in the file LICENSE, and is        |
@@ -32,25 +32,31 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 
-int allow_severity = 0;
-int deny_severity = 0;
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tcpwrap_check, 0, 0, 2)
+	ZEND_ARG_INFO(0, daemon)
+	ZEND_ARG_INFO(0, address)
+	ZEND_ARG_INFO(0, user)
+	ZEND_ARG_INFO(0, nodns)
+ZEND_END_ARG_INFO();
 
 /* {{{ tcpwrap_functions[]
  *
  * Every user visible function must have an entry in tcpwrap_functions[].
  */
-zend_function_entry tcpwrap_functions[] = {
-	PHP_FE(tcpwrap_check,	NULL)		/* For testing, remove later. */
+static zend_function_entry tcpwrap_functions[] = {
+	PHP_FE(tcpwrap_check,	arginfo_tcpwrap_check)
+#ifdef PHP_FE_END
+	PHP_FE_END
+#else
 	{NULL, NULL, NULL}	/* Must be the last line in tcpwrap_functions[] */
+#endif
 };
 /* }}} */
 
 /* {{{ tcpwrap_module_entry
  */
 zend_module_entry tcpwrap_module_entry = {
-#if ZEND_MODULE_API_NO >= 20010901
 	STANDARD_MODULE_HEADER,
-#endif
 	"tcpwrap",
 	tcpwrap_functions,
 	NULL,
@@ -58,9 +64,7 @@ zend_module_entry tcpwrap_module_entry = {
 	NULL,
 	NULL,
 	PHP_MINFO(tcpwrap),
-#if ZEND_MODULE_API_NO >= 20010901
 	PHP_TCPWRAP_VERSION,
-#endif
 	STANDARD_MODULE_PROPERTIES
 };
 /* }}} */
@@ -84,9 +88,15 @@ PHP_MINFO_FUNCTION(tcpwrap)
    Check if client has access according to tcp wrappers table */
 PHP_FUNCTION(tcpwrap_check)
 {
-	int argc, retval, nodns = 0;
+	int argc, retval;
+	zend_bool nodns = 0;
+#if PHP_VERSION_ID < 70000
+	int daemon_l, address_l, user_l;
+#else
+	size_t daemon_l, address_l, user_l;
+#endif
 	char data[512], *daemon, *ip, *address, *user = NULL;
-	int daemon_l, address_l, user_l, lookup_result, dns_result;
+	int lookup_result, dns_result;
 	struct in_addr tmp;
 	struct hostent host_entry, *result;
 
