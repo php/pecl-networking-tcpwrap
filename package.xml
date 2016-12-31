@@ -35,7 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    </dir> <!-- //tests -->
    <file name="config.m4" role="src" />
    <file name="CREDITS" role="doc" />
-   <file name="EXPERIMENTAL" role="doc" />
+   <file name="LICENSE" role="doc" />
    <file name="php_tcpwrap.h" role="src" />
    <file name="tcpwrap.c" role="src" />
   </dir> <!-- / -->
