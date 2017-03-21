@@ -24,7 +24,7 @@
 extern zend_module_entry tcpwrap_module_entry;
 #define phpext_tcpwrap_ptr &tcpwrap_module_entry
 
-#define PHP_TCPWRAP_VERSION "1.1.3"
+#define PHP_TCPWRAP_VERSION "1.2.0"
 
 #ifdef PHP_WIN32
 #define PHP_TCPWRAP_API __declspec(dllexport)
