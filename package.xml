@@ -30,7 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <api>stable</api>
  </stability>
  <license uri="http://www.php.net/license">PHP License</license>
- <notes>Fix compile error on Solaris.
+ <notes>Add compatibility with recent PHP versions
  </notes>
  <contents>
   <dir name="/">
